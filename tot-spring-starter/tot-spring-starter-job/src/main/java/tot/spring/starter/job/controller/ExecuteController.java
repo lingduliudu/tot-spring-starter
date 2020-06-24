@@ -15,18 +15,13 @@ public class ExecuteController {
 
 	@Autowired
 	private SpringExecute springExecute;
-	
+
 	@GetMapping("execute")
-	public void execute(String beanName,String methodName){
+	public void execute(String beanName, String methodName) throws Exception {
 		Object obj = springExecute.getBean(beanName);
 		Class cl = obj.getClass();
-		try {
-			Method method = cl.getDeclaredMethod(methodName);
-			method.invoke(obj, new Object[] {});
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		
+		Method method = cl.getDeclaredMethod(methodName);
+		method.invoke(obj, new Object[] {});
 	}
-	
+
 }
