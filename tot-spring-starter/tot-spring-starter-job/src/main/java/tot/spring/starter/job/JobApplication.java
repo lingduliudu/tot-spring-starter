@@ -3,10 +3,10 @@ package tot.spring.starter.job;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import tot.spring.starter.job.annotation.EnableJobClient;
+import tot.spring.starter.job.annotation.EnableRestJobClient;
 
 @SpringBootApplication
-@EnableJobClient
+@EnableRestJobClient
 public class JobApplication {
 
 	public static void main(String[] args) {
