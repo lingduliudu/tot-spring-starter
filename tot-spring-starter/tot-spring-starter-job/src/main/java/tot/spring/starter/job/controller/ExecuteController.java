@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
+
 import tot.spring.starter.job.execute.SpringExecute;
+import tot.spring.starter.job.response.Result;
 
 @RestController
 @RequestMapping("/job-execute")
@@ -17,11 +20,20 @@ public class ExecuteController {
 	private SpringExecute springExecute;
 
 	@GetMapping("execute")
-	public void execute(String beanName, String methodName) throws Exception {
-		Object obj = springExecute.getBean(beanName);
-		Class cl = obj.getClass();
-		Method method = cl.getDeclaredMethod(methodName);
-		method.invoke(obj, new Object[] {});
+	public Result<String> execute(String beanName, String methodName){
+		Result<String> result = new Result<String>();
+		try {
+			Object obj = springExecute.getBean(beanName);
+			Class cl = obj.getClass();
+			Method method = cl.getDeclaredMethod(methodName);
+			Object  data= method.invoke(obj, new Object[] {});
+			result.setObj(JSONObject.toJSONString(data));
+			result.setCode("200");
+		}catch (Exception e) {
+			e.printStackTrace();
+			result.setCode("500");
+		}
+		return result;
 	}
 
 }
